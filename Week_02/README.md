@@ -11,3 +11,77 @@
 
 ### 树和二叉树
 树是由结点和边组成的，不存在环的一种数据结构。树满足递归定义的特性。也就是说，如果一个数据结构是树结构，那么剔除掉根结点后，得到的若干个子结构也是树，通常称为子树。
+
+树中被高频使用的二叉树每个结点最多有两个分支，即每个结点最多有两个子结点，分别称作左子结点和右子结点。
+
+满二叉树：除了叶子结点外，所有结点都有两个子子结点。
+
+完全二叉树：除了最后一层以外，其它层的结点个数都达到最大，并且最后一层的叶子结点都靠左排列。
+
+遍历一棵树，有三种经典方法，分别是前序遍历、中序遍历、后续遍历，都是通过递归调用完成的。
+前序：根左右
+中序：左根右
+后序：左右根
+
+代码模板：
+```
+// 前序遍历
+// Java
+public static void preOrderTraverse(Node node) {
+  if (node == null) return;
+  System.out.print(node.data + " ");
+  preOrderTraverse(node.left);
+  preOrderTraverse(node.right);
+}
+// JavaScript
+var preOrderTraverse = function(root) {
+  if (root) {
+    return [root.val, ...preOrderTraverse(root.left), ...preOrderTraverse(..root.right)]
+  } else {
+    return []
+  }
+}
+
+// 中序遍历
+// Java
+public static void inOrderTraverse(Node node) {
+  if (node == null) return;
+  inOrderTraverse(node.left);
+  System.out.print(node.data + " ");
+  inOrderTraverse(node.right);
+}
+// JavaScript
+var inOrderTraverse = function(root) {
+  if (root) {
+    return [...inOrderTraverse(root.left), root.val, ...inOrderTraverse(...root.right)]
+  } else {
+    return []
+  }
+}
+
+// 后序遍历
+// Java
+Public static void postOrderTraverse(Node node) {
+  if (node == null) return;
+  postOrderTraverse(node.left);
+  postOrderTraverse(node.right);
+  System.out.print(node.data + " ");
+}
+// JavaScript
+var postOrderTraverse = function(root) {
+  if (root) {
+    return [...postOrderTraverse(root.left), ...postOrderTraverse(root.right), root.val]
+  } else {
+    return []
+  }
+}
+```
+二叉树遍历过程中，每个结点都被访问了一次，其时间复杂度是 O(n)。
+
+### 堆
+堆是一种特殊的树。满足以下两点要求的树就是一个堆。
+- 堆是一个完全二叉树。
+- 堆中每一个结点的值都必须大于等于（或小于等于）其子树中每个结点的值。
+
+堆分为小顶堆和大顶堆。
+堆中比较重要的两个操作是插入一个元素和删除堆顶元素。这两个操作都要用到堆化（heapify）。插入一个数据的时候，我们把新插入的数据放到数组的最后，然后从下往上堆化；删除堆顶数据的时候，我们把数组中的最后一个元素放到堆顶，然后从上往下堆化。这两个操作的时间复杂度都是O(logN)。
