@@ -38,6 +38,63 @@ Trie 树是一种解决字符串快速匹配问题的数据结构。如果用来
 
 但是，Trie 树的优势并不在于，用它来做动态集合数据的查找，因为，这个工作完全可以用更加合适的散列表或者红黑树来替代。Trie 树最有优势的是查找前缀匹配的字符串，比如搜索引擎中的关键词提示功能这个场景，就比较适合用它来解决，也是 Trie 树比较经典的应用场景。
 
+### 并查集
+在计算机科学中，并查集是一种树型的数据结构，用于处理一些不交集（Disjoint Sets）的合并及查询问题。有一个联合-查找算法（union-find algorithm）定义了两个用于此数据结构的操作：
+- Find：确定元素属于哪一个子集。它可以被用来确定两个元素是否属于同一子集。
+- Union：将两个子集合并成同一个集合。
+
+由于支持这两种操作，一个不相交集也常被称为联合-查找数据结构（union-find data structure）或合并-查找集合（merge-find set）。其他的重要方法，MakeSet，用于创建单元素集合。有了这些方法，许多经典的划分问题可以被解决。
+
+为了更加精确的定义这些方法，需要定义如何表示集合。一种常用的策略是为每个集合选定一个固定的元素，称为代表，以表示整个集合。接着，Find(x) 返回x所属集合的代表，而Union使用两个集合的代表作为参数。
+
+#### 并查集代码模板
+```
+// Java
+class UnionFind { 
+	private int count = 0; 
+	private int[] parent; 
+	public UnionFind(int n) { 
+		count = n; 
+		parent = new int[n]; 
+		for (int i = 0; i < n; i++) { 
+			parent[i] = i;
+		}
+	} 
+	public int find(int p) { 
+		while (p != parent[p]) { 
+			parent[p] = parent[parent[p]]; 
+			p = parent[p]; 
+		}
+		return p; 
+	}
+	public void union(int p, int q) { 
+		int rootP = find(p); 
+		int rootQ = find(q); 
+		if (rootP == rootQ) return; 
+		parent[rootP] = rootQ; 
+		count--;
+	}
+}
+
+# Python 
+def init(p): 
+	# for i = 0 .. n: p[i] = i; 
+	p = [i for i in range(n)] 
+ 
+def union(self, p, i, j): 
+	p1 = self.parent(p, i) 
+	p2 = self.parent(p, j) 
+	p[p1] = p2 
+ 
+def parent(self, p, i): 
+	root = i 
+	while p[root] != root: 
+		root = p[root] 
+	while p[i] != i: # 路径压缩 ?
+		x = i; i = p[i]; p[x] = root 
+	return root
+```
+
 ### 剪枝
 
 ### 双向BFS
